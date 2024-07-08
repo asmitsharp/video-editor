@@ -1,11 +1,12 @@
 const cpeak = require("cpeak")
-const { authenticate, serverIndex } = require("../src/middleware/index.js")
-const apiRouter = require("../src/router.js")
+const { authenticate, serverIndex } = require("./middleware/index.js")
+const apiRouter = require("./router.js")
+
+const PORT = 8060
 
 const server = new cpeak()
 
 // ------ Middlewares ------ //
-
 // For serving static files
 server.beforeEach(cpeak.serveStatic("./public"))
 
@@ -33,6 +34,6 @@ server.handleErr((error, req, res) => {
   }
 })
 
-module.exports = (req, res) => {
-  server.handle(req, res)
-}
+server.listen(PORT, () => {
+  console.log(`Server has started on port ${PORT}`)
+})
